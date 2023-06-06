@@ -4,18 +4,32 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public List<GameObject> enemyList = new List<GameObject>();
+    public List<GameObject> enemyList;
     public int enemyNum;
     public GameObject enemyPrefab;
 
+    void Start()
+    {
+        enemyList = new List<GameObject>(enemyNum);
+    }
+
     void Update()
     {
-        for (int i = 0; i < enemyNum; i++)
+        if (enemyNum > 1)
         {
-            if (enemyList[i] == null)
+            for (int i = 0; i < enemyNum; i++)
             {
-                RespawnEnemy(i);
+                Debug.Log(enemyList[i]);
+                //if (enemyList[i] == null)
+                //{
+                //    RespawnEnemy(i);
+                //}
             }
+        }
+
+        else
+        {
+            Debug.Log("Enemy List is empty");
         }
     }
 
