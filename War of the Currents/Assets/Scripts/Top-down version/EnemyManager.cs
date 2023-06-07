@@ -4,15 +4,23 @@ using UnityEngine;
 
 public class EnemyManager : MonoBehaviour
 {
-    public List<GameObject> enemyList = new List<GameObject>();
-    public int enemyNum;
-    public GameObject enemyPrefab;
+    [HideInInspector]
+    public EnemyScript[] enemies;
+    public int enemyCount;
+    public EnemyScript enemyPrefab;
+    public Rect spawnArea;
+    public GameObject player;
+
+    void Start() 
+    {
+        enemies = new EnemyScript[enemyCount];
+    }
 
     void Update()
     {
-        for (int i = 0; i < enemyNum; i++)
+        for (int i = 0; i < enemyCount; i++)
         {
-            if (enemyList[i] == null)
+            if (enemies[i] == null)
             {
                 RespawnEnemy(i);
             }
@@ -21,10 +29,10 @@ public class EnemyManager : MonoBehaviour
 
     void RespawnEnemy(int i)
     {
-        enemyList[i] = enemyPrefab;
-
         Vector3 spawnPos = new Vector3(Random.Range(-27, 27), 1, Random.Range(-27, 27));
-        Instantiate(enemyPrefab, spawnPos, Quaternion.identity);
+        EnemyScript enemy = Instantiate(enemyPrefab, spawnPos, Quaternion.identity, transform);
+        enemy.player = player;
+        enemies[i] = enemy;
     }
 }
 
