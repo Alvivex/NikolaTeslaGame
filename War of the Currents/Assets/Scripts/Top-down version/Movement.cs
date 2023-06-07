@@ -4,8 +4,13 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public CharacterController controller;
+    private CharacterController controller;
     public float moveSpeed;
+
+    public void Start() 
+    {
+        controller = GetComponent<CharacterController>();
+    }
 
     void Update()
     {
@@ -14,6 +19,12 @@ public class Movement : MonoBehaviour
 
     public void Move()
     {
-        controller.Move(new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical")) * moveSpeed * Time.deltaTime);
+        controller.Move(
+            Vector3.ClampMagnitude(new Vector3(
+                Input.GetAxis("Horizontal"),
+                0,
+                Input.GetAxis("Vertical")
+            ), 1f) * moveSpeed * Time.deltaTime
+        );
     }
 }

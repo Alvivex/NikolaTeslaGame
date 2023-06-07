@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    public CharacterController controller;
+    private CharacterController controller;
     public GameObject player;
     public float idleDistance = 5f;
     public float enemySpeed;
@@ -16,6 +16,7 @@ public class EnemyScript : MonoBehaviour
 
     void Start()
     {
+        controller = GetComponent<CharacterController>();
         playerHP.enemies.Add(this.gameObject);
         //enemyManager.enemyList.Add(this.gameObject);
     }
