@@ -25,6 +25,7 @@ public class Movement : MonoBehaviour
     public void Move()
     {
         Vector3 moveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
+        moveDir = Vector3.ClampMagnitude(moveDir, 1);
 
         controller.Move(moveDir * moveSpeed * Time.deltaTime);
 

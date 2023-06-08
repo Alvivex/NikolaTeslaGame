@@ -13,12 +13,9 @@ public class EnemyScript : MonoBehaviour
 
     public string enemyName;
 
-    public HPManager playerHP;
-
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        playerHP.enemies.Add(this.gameObject);
     }
 
     void Update()
