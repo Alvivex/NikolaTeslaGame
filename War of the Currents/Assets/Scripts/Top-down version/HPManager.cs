@@ -10,7 +10,7 @@ public class HPManager : MonoBehaviour
     private float health;
     public float colliderDistance;
     public List<EnemyManager> enemyManagers;
-    public float enemyDamage;
+    //public float enemyDamage;
     void Start()
     {
         health = maxHealth;
@@ -44,9 +44,9 @@ public class HPManager : MonoBehaviour
         foreach (EnemyManager manager in enemyManagers) foreach (EnemyScript enemy in manager.enemies)
         {
             if (enemy == null) continue;
-            if (Vector3.Distance(enemy.transform.position, transform.position) <= colliderDistance)
+            if (Vector3.Distance(enemy.transform.position, transform.position) <= colliderDistance + enemy.colliderDistance)
             {
-                TakeDamage(enemyDamage * Time.deltaTime);
+                TakeDamage(enemy.damage * Time.deltaTime);
             }
         }
     }

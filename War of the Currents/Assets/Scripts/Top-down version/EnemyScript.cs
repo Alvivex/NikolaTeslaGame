@@ -10,6 +10,8 @@ public class EnemyScript : MonoBehaviour
     public float idleDistance = 5f;
     public float enemySpeed;
     public float gravity;
+    public float damage;
+    public float colliderDistance;
 
     public string enemyName;
 
