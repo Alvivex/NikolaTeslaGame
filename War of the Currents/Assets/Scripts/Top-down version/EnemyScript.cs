@@ -8,6 +8,7 @@ public class EnemyScript : MonoBehaviour
     public GameObject player;
     public float idleDistance = 5f;
     public float enemySpeed;
+    public float gravity;
 
     public string enemyName;
 
@@ -27,12 +28,12 @@ public class EnemyScript : MonoBehaviour
 
     void MoveTowardsPlayer()
     {
-        transform.LookAt(player.transform);
+        transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
 
         if (Vector3.Distance(player.transform.position, transform.position) >= idleDistance)
         {
 
-            Vector3 target = new Vector3(transform.forward.x, 0, transform.forward.z);
+            Vector3 target = new Vector3(transform.forward.x, -gravity, transform.forward.z);
             controller.Move(target * enemySpeed * Time.deltaTime);
         }
     }

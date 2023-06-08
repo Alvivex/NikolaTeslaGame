@@ -15,22 +15,11 @@ public class HPManager : MonoBehaviour
 
     void Update()
     {
+        CheckForDamage();
         if (healthAmount <= 0)
         {
             Debug.Log("Game Over");
         }
-
-        if (Input.GetKeyDown(KeyCode.Return))
-        {
-            TakeDamage(20f);
-        }
-
-        else if (Input.GetKeyDown(KeyCode.Space))
-        {
-            Heal(10f);
-        }
-
-        CheckForDamage();
     }
 
     public void TakeDamage(float damage)
@@ -55,6 +44,20 @@ public class HPManager : MonoBehaviour
             {
                 TakeDamage(enemyDamage);
             }
+        }
+    }
+
+    public void OnControllerColliderHit(ControllerColliderHit collider)
+    {
+        switch (collider.gameObject.tag)
+        {
+            // Manage health capsules
+            case "XP":
+                Heal(20f);
+                Destroy(collider.gameObject);
+                break;
+            default:
+                break;
         }
     }
 }
