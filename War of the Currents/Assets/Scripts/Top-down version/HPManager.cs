@@ -6,17 +6,22 @@ using UnityEngine.UI;
 public class HPManager : MonoBehaviour
 {
     public Image healthBar;
-    public float healthAmount = 100f;
+    public float maxHealth = 100f;
+    private float health;
     public List<GameObject> enemies = new List<GameObject>();
 
     public float colliderDistance;
-    public EnemyManager enemyManager;
+    public List<EnemyManager> enemyManagers;
     public float enemyDamage;
-
+    void Start()
+    {
+        health = maxHealth;
+    }
     void Update()
     {
         CheckForDamage();
-        if (healthAmount <= 0)
+
+        if (health <= 0)
         {
             Debug.Log("Game Over");
         }
@@ -24,25 +29,26 @@ public class HPManager : MonoBehaviour
 
     public void TakeDamage(float damage)
     { 
-        healthAmount -= damage * Time.deltaTime;
-        healthBar.fillAmount = healthAmount / 100f;
+        health -= damage;
+        healthBar.fillAmount = health / maxHealth;
     }
 
     public void Heal(float healingAmount)
     {
-        healthAmount += healingAmount;
-        healthAmount = Mathf.Clamp(healthAmount, 0, 100);
+        health += healingAmount;
+        health = Mathf.Clamp(health, 0, maxHealth);
 
-        healthBar.fillAmount = healthAmount / 100f;
+        healthBar.fillAmount = health / maxHealth;
     }
 
     public void CheckForDamage()
     {
-        foreach (GameObject enemy in enemies)
+        foreach (EnemyManager manager in enemyManagers) foreach (EnemyScript enemy in manager.enemies)
         {
+            Debug.Log(enemy);
             if (Vector3.Distance(enemy.transform.position, transform.position) <= colliderDistance)
             {
-                TakeDamage(enemyDamage);
+                TakeDamage(enemyDamage * Time.deltaTime);
             }
         }
     }

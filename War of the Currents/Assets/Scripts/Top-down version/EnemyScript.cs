@@ -4,7 +4,8 @@ using UnityEngine;
 
 public class EnemyScript : MonoBehaviour
 {
-    public CharacterController controller;
+    private CharacterController controller;
+    [HideInInspector]
     public GameObject player;
     public float idleDistance = 5f;
     public float enemySpeed;
@@ -13,12 +14,11 @@ public class EnemyScript : MonoBehaviour
     public string enemyName;
 
     public HPManager playerHP;
-    //public EnemyManager enemyManager;
 
     void Start()
     {
+        controller = GetComponent<CharacterController>();
         playerHP.enemies.Add(this.gameObject);
-        //enemyManager.enemyList.Add(this.gameObject);
     }
 
     void Update()
@@ -30,7 +30,7 @@ public class EnemyScript : MonoBehaviour
     {
         transform.LookAt(new Vector3(player.transform.position.x, transform.position.y, player.transform.position.z));
 
-        if (Vector3.Distance(player.transform.position, transform.position) >= idleDistance)
+        if (Vector3.Distance(player.transform.position, transform.position) <= idleDistance)
         {
 
             Vector3 target = new Vector3(transform.forward.x, -gravity, transform.forward.z);

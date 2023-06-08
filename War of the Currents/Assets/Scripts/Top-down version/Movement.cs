@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Movement : MonoBehaviour
 {
-    public CharacterController controller;
+    private CharacterController controller;
     public float moveSpeed;
     public GameObject TeslaModel;
     public Animator modelAnimator;
@@ -12,7 +12,10 @@ public class Movement : MonoBehaviour
     void Start()
     {
         modelAnimator = TeslaModel.GetComponent<Animator>();
+        controller = GetComponent<CharacterController>();
     }
+
+
 
     void Update()
     {
@@ -56,5 +59,7 @@ public class Movement : MonoBehaviour
             modelAnimator.SetBool("isIdle", true);
             modelAnimator.SetBool("isRunning", false);
         }
+
+        controller.Move(Vector3.ClampMagnitude(new Vector3(Input.GetAxis("Horizontal"),0,Input.GetAxis("Vertical")), 1f) * moveSpeed * Time.deltaTime);
     }
 }
