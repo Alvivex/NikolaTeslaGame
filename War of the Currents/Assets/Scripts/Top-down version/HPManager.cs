@@ -8,11 +8,8 @@ public class HPManager : MonoBehaviour
     public Image healthBar;
     public float maxHealth = 100f;
     private float health;
-    public List<GameObject> enemies = new List<GameObject>();
-
     public float colliderDistance;
     public List<EnemyManager> enemyManagers;
-    public float enemyDamage;
     void Start()
     {
         health = maxHealth;
@@ -43,14 +40,14 @@ public class HPManager : MonoBehaviour
 
     public void CheckForDamage()
     {
-        foreach (EnemyManager manager in enemyManagers) foreach (EnemyScript enemy in manager.enemies)
+        /*foreach (EnemyManager manager in enemyManagers) foreach (EnemyScript enemy in manager.enemies)
         {
             Debug.Log(enemy);
             if (Vector3.Distance(enemy.transform.position, transform.position) <= colliderDistance)
             {
                 TakeDamage(enemyDamage * Time.deltaTime);
             }
-        }
+        }*/
     }
 
     public void OnControllerColliderHit(ControllerColliderHit collider)

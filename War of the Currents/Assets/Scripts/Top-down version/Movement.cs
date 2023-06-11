@@ -7,7 +7,7 @@ public class Movement : MonoBehaviour
     private CharacterController controller;
     public float moveSpeed;
     public GameObject TeslaModel;
-    public Animator modelAnimator;
+    private Animator modelAnimator;
     public float gravity;
 
     public bool isSlashing;

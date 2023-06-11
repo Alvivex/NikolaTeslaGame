@@ -18,13 +18,12 @@ public class EnemyScript : MonoBehaviour
     public float maxHeight;
     public float health = 100f;
 
-    float timer = 0.0f;
+    private float timer = 0.0f;
     public float attackInterval;
 
     void Start()
     {
         controller = GetComponent<CharacterController>();
-        playerHP.enemies.Add(this.gameObject);
     }
 
     void Update()
@@ -60,8 +59,9 @@ public class EnemyScript : MonoBehaviour
         // deal damage if close enough to player (in intervals)
         else
         {
-            if ((int)(timer) % (int)(attackInterval) == 0)
+            if (timer > attackInterval)
             {
+                timer = 0;
                 playerHP.TakeDamage(damage);
                 enemyAnimator.SetBool("isRunning", false);
                 enemyAnimator.SetBool("isIdle", false);
