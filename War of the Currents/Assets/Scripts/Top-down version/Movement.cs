@@ -8,6 +8,9 @@ public class Movement : MonoBehaviour
     public float moveSpeed;
     public GameObject TeslaModel;
     public Animator modelAnimator;
+    public float gravity;
+
+    public bool isSlashing;
 
     void Start()
     {
@@ -24,8 +27,7 @@ public class Movement : MonoBehaviour
 
     public void Move()
     {
-        Vector3 moveDir = new Vector3(Input.GetAxis("Horizontal"), 0, Input.GetAxis("Vertical"));
-        moveDir = Vector3.ClampMagnitude(moveDir, 1);
+        Vector3 moveDir = new Vector3(Input.GetAxis("Horizontal"), -gravity, Input.GetAxis("Vertical"));
 
         controller.Move(moveDir * moveSpeed * Time.deltaTime);
 
@@ -44,6 +46,7 @@ public class Movement : MonoBehaviour
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(movement), 0.15f);
             modelAnimator.SetBool("isRunning", true);
             modelAnimator.SetBool("isIdle", false);
+            isSlashing = false;
         }
 
         // Play slash animation when space is pressed
@@ -52,6 +55,7 @@ public class Movement : MonoBehaviour
             modelAnimator.SetBool("isRunning", false);
             modelAnimator.SetBool("isIdle", false);
             modelAnimator.Play("Melee Swing");
+            isSlashing = true;
         }
 
         // Play idle animation when stationary
@@ -59,6 +63,7 @@ public class Movement : MonoBehaviour
         {
             modelAnimator.SetBool("isIdle", true);
             modelAnimator.SetBool("isRunning", false);
+            isSlashing = false;
         }
 
         controller.Move(Vector3.ClampMagnitude(new Vector3(Input.GetAxis("Horizontal"),0,Input.GetAxis("Vertical")), 1f) * moveSpeed * Time.deltaTime);

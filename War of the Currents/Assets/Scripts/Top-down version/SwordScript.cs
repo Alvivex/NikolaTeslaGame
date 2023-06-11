@@ -4,26 +4,46 @@ using UnityEngine;
 
 public class SwordScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    EnemyScript enemyScript;
+    public Animator playerAnim;
+    public float damage;
+
+    public float flashTime;
+    public Color originalColor;
+    private SkinnedMeshRenderer renderer;
+
+    void FlashRed()
     {
-        
+        renderer.material.color = Color.red;
+        Invoke("ResetColor", flashTime);
     }
 
-    // Update is called once per frame
-    void Update()
+    void ResetColor()
     {
-        
+        renderer.material.color = originalColor;
     }
 
-    public void OnCollisionEnter(Collision collision)
+    public void OnTriggerEnter(Collider collider)
     {
-        switch (collision.gameObject.tag)
+        switch (collider.gameObject.tag)
         {
             case ("Enemy"):
-                Debug.Log("Hit Enemy");
+                if (playerAnim.GetCurrentAnimatorStateInfo(0).IsName("Melee Swing"))
+                {
+                    enemyScript = collider.GetComponent<EnemyScript>();
+                    renderer = collider.GetComponent<SkinnedMeshRenderer>();
+
+                    FlashRed();
+
+                    enemyScript.health -= damage;
+                    Debug.Log(enemyScript.health);
+
+                }
+                break;
+
+            default:
+                renderer.material.color = originalColor;
                 break;
         }
     }
-
 }

@@ -54,7 +54,7 @@ public class EnemyManager : MonoBehaviour
 
     void RespawnEnemy(int i)
     {
-        Vector3 spawnPos = new Vector3(Random.Range(-27, 27), 1, Random.Range(-27, 27));
+        Vector3 spawnPos = new Vector3(Random.Range(-27, 27), 21, Random.Range(-27, 27));
         EnemyScript enemy = Instantiate(GetEnemy(), spawnPos, Quaternion.identity, transform);
         enemy.gameObject.SetActive(true);
         enemy.player = player;
